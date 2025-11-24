@@ -17,7 +17,7 @@ export default function Dropzone({
   isLoading = false,
   helperText,
   accept = ".log,.txt,.csv,.json",
-  ctaLabel = "上传或拖拽日志"
+  ctaLabel = "Upload or drop a log"
 }: DropzoneProps) {
   const [isDragging, setDragging] = useState(false);
 
@@ -61,11 +61,13 @@ export default function Dropzone({
       <div className="space-y-1">
         <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{ctaLabel}</p>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          {!isLoading ? helperText ?? "支持 CSV、Nginx、Apache、S3、Docker 等常见日志格式" : "DuckDB 正在解析..."}
+          {!isLoading
+            ? helperText ?? "Supports CSV, Nginx, Apache, S3, Docker and other common log formats"
+            : "DuckDB is parsing..."}
         </p>
       </div>
       <Button type="button" variant="subtle" disabled={isLoading}>
-        选择文件
+        Choose file
       </Button>
     </label>
   );

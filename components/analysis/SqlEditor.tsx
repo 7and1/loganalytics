@@ -19,7 +19,7 @@ export default function SqlEditor({ onRun, defaultSql = "SELECT * FROM log_table
           DuckDB SQL
         </p>
         <Button type="button" onClick={() => onRun(sql)} disabled={isRunning}>
-          {isRunning ? "查询中..." : "运行"}
+          {isRunning ? "Running..." : "Run"}
         </Button>
       </div>
       <textarea

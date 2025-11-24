@@ -48,7 +48,7 @@ export default async function ErrorPage({ params }: ErrorPageProps) {
   return (
     <main className="mx-auto max-w-4xl space-y-8 px-6 py-12">
       <Link href="/" className="text-sm text-emerald-500 hover:text-emerald-400">
-        ← 回到分析面板
+        ← Back to analyzer
       </Link>
       <header className="space-y-2">
         <p className="text-xs uppercase tracking-wide text-emerald-500">Troubleshooting</p>

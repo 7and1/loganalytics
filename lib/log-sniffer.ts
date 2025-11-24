@@ -30,7 +30,7 @@ export async function sniffLogFormat(
     const lines = rawLines.filter(Boolean).slice(0, maxSampleLines);
 
     if (!lines.length) {
-      return { format: null, confidence: 0, tested: 0, error: "日志内容为空" };
+      return { format: null, confidence: 0, tested: 0, error: "Log file is empty" };
     }
 
     let best: { format: LogFormat | null; score: number } = {
@@ -53,9 +53,14 @@ export async function sniffLogFormat(
       return { format: best.format, confidence: best.score, tested: lines.length };
     }
 
-    return { format: null, confidence: best.score, tested: lines.length, error: "未识别格式" };
+    return { format: null, confidence: best.score, tested: lines.length, error: "No format detected" };
   } catch (error) {
-    return { format: null, confidence: 0, tested: 0, error: error instanceof Error ? error.message : "读取失败" };
+    return {
+      format: null,
+      confidence: 0,
+      tested: 0,
+      error: error instanceof Error ? error.message : "Failed to read file",
+    };
   }
 }
 

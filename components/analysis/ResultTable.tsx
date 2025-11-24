@@ -10,7 +10,7 @@ export default function ResultTable({ columns, rows, caption }: ResultTableProps
   if (!rows.length) {
     return (
       <div className="rounded-2xl border border-dashed border-zinc-300 p-8 text-center text-sm text-zinc-500 dark:border-zinc-700 dark:text-zinc-400">
-        暂无数据，请先上传日志或运行查询。
+        No data yet. Upload a log or run a query first.
       </div>
     );
   }

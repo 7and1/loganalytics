@@ -28,7 +28,7 @@ export default function LogTool() {
 
 function LogToolInner() {
   const [status, setStatus] = useState<Status>("idle");
-  const [message, setMessage] = useState<string>("拖入日志文件即可开始");
+  const [message, setMessage] = useState<string>("Drop a log file to get started");
   const [activeFormat, setActiveFormat] = useState<LogFormat | null>(null);
   const [sniffConfidence, setSniffConfidence] = useState(0);
   const [ingestSummary, setIngestSummary] = useState<IngestSummary | null>(null);
@@ -43,7 +43,7 @@ function LogToolInner() {
   const addLog = useDebugStore((state) => state.addLog);
   const updateStats = useDebugStore((state) => state.updateStats);
   const [probeStatus, setProbeStatus] = useState<"idle" | "running" | "success" | "error">("idle");
-  const [probeMessage, setProbeMessage] = useState("尚未运行测试");
+  const [probeMessage, setProbeMessage] = useState("Probe has not been run yet");
   const [isSampleLoading, setIsSampleLoading] = useState(false);
   const lastLoadedSampleRef = useRef<string | null>(null);
 
@@ -125,7 +125,7 @@ function LogToolInner() {
         setStatusChartData(nextStatusData);
         setTimelineChartData(nextTimelineData);
       } catch (error) {
-        setChartError(error instanceof Error ? error.message : "无法生成图表");
+        setChartError(error instanceof Error ? error.message : "Unable to generate charts");
       } finally {
         setIsChartLoading(false);
       }
@@ -137,7 +137,7 @@ function LogToolInner() {
     async (file: File) => {
       setStatus("sniffing");
       setQueryError(null);
-      setMessage("🔍 正在嗅探日志格式...");
+      setMessage("🔍 Detecting log format...");
       setStatusChartData([]);
       setTimelineChartData([]);
       setChartError(null);
@@ -151,14 +151,14 @@ function LogToolInner() {
           : await sniffLogFormat(file, formats);
         if (!sniff.format) {
           setStatus("error");
-          setMessage("error" in sniff && sniff.error ? sniff.error : "未能识别日志格式");
+          setMessage("error" in sniff && sniff.error ? sniff.error : "Unable to detect log format");
           return;
         }
 
         setActiveFormat(sniff.format);
         setSniffConfidence(sniff.confidence);
         setStatus("ingesting");
-        setMessage(`🧠 已识别 ${sniff.format.name}，DuckDB 正在载入...`);
+        setMessage(`🧠 Detected ${sniff.format.name}. Loading DuckDB...`);
 
         const ingestStart = performance.now();
         const summary = await ingestLogFile(file, sniff.format, { previewRows: 200 });
@@ -166,7 +166,7 @@ function LogToolInner() {
         setIngestSummary(summary);
         setStatus("ready");
         setMessage(
-          `✅ 已载入 ${summary.totalRows.toLocaleString()} 行，异常 ${summary.errorRows.toLocaleString()} 行`
+          `✅ Loaded ${summary.totalRows.toLocaleString()} rows, rejects ${summary.errorRows.toLocaleString()} rows`
         );
         updateStats({
           filename: file.name,
@@ -181,7 +181,7 @@ function LogToolInner() {
         }
       } catch (error) {
         setStatus("error");
-        setMessage(error instanceof Error ? error.message : "解析失败");
+        setMessage(error instanceof Error ? error.message : "Failed to parse log");
       }
     },
     [
@@ -215,7 +215,7 @@ function LogToolInner() {
         );
       } catch (error) {
         const duration = Math.round(performance.now() - start);
-        const errorMessage = error instanceof Error ? error.message : "查询失败";
+        const errorMessage = error instanceof Error ? error.message : "Query failed";
         addLog({ query: sql, durationMs: duration, error: errorMessage });
         setQueryError(errorMessage);
       } finally {
@@ -227,19 +227,19 @@ function LogToolInner() {
 
   const handleRunProbe = useCallback(async () => {
     setProbeStatus("running");
-    setProbeMessage("正在运行 DuckDB rejects_table 测试...");
+    setProbeMessage("Running DuckDB rejects_table probe...");
     try {
       const result = await probeRejectsCapability();
       if (result.success) {
         setProbeStatus("success");
-        setProbeMessage(`验证成功：有效 ${result.validRows} 行，拒绝 ${result.rejectRows} 行`);
+        setProbeMessage(`Success: valid ${result.validRows} rows, rejects ${result.rejectRows} rows`);
       } else {
         setProbeStatus("error");
-        setProbeMessage(result.error ?? "Probe 结果异常");
+        setProbeMessage(result.error ?? "Probe returned unexpected output");
       }
     } catch (error) {
       setProbeStatus("error");
-      setProbeMessage(error instanceof Error ? error.message : "Probe 执行失败");
+      setProbeMessage(error instanceof Error ? error.message : "Probe execution failed");
     }
   }, []);
 
@@ -247,10 +247,10 @@ function LogToolInner() {
     async (samplePath: string) => {
       try {
         setIsSampleLoading(true);
-        setMessage("📦 正在载入示例日志...");
+        setMessage("📦 Loading sample log...");
         const response = await fetch(samplePath);
         if (!response.ok) {
-          throw new Error("示例日志加载失败");
+          throw new Error("Failed to load sample log");
         }
         const text = await response.text();
         const filename = samplePath.split("/").pop() || "sample.log";
@@ -259,7 +259,7 @@ function LogToolInner() {
         await handleFileAccepted(sampleFile);
       } catch (error) {
         setStatus("error");
-        setMessage(error instanceof Error ? error.message : "示例加载失败");
+        setMessage(error instanceof Error ? error.message : "Failed to load sample");
       } finally {
         setIsSampleLoading(false);
       }
@@ -300,37 +300,37 @@ function LogToolInner() {
 
   useEffect(() => {
     if (templateFormat && status === "idle") {
-      setMessage(`🎯 已载入 ${templateFormat.name} 模板，拖入对应日志即可开始`);
+      setMessage(`🎯 Loaded ${templateFormat.name} template. Drop a matching log to begin`);
     }
   }, [templateFormat, status]);
 
   const handleClearTemplate = useCallback(() => {
     consumeTemplate();
-    setMessage("拖入日志文件即可开始");
+    setMessage("Drop a log file to get started");
   }, [consumeTemplate]);
 
   return (
     <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 lg:flex-row">
       <div className="w-full space-y-6 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur lg:w-1/3">
         <div className="space-y-2">
-          <p className="text-sm uppercase tracking-wide text-emerald-300">步骤 1</p>
-          <h1 className="text-2xl font-semibold">拖拽日志，自动识别</h1>
-          <p className="text-sm text-white/70">Sniffer 仅读取文件前 64KB，就能匹配 formats.json。</p>
+          <p className="text-sm uppercase tracking-wide text-emerald-300">Step 1</p>
+          <h1 className="text-2xl font-semibold">Drop a log, auto-detect format</h1>
+          <p className="text-sm text-white/70">Sniffer only inspects the first 64 KB to match against formats.json.</p>
         </div>
         {isTemplateActive && templateFormat && (
           <div className="flex items-start justify-between gap-4 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4 text-sm text-emerald-100">
             <div>
               <p>
-                🚀 模板已激活：<span className="font-semibold">{templateFormat.name}</span>
+                🚀 Template active: <span className="font-semibold">{templateFormat.name}</span>
               </p>
-              {templateQuery && <p className="mt-1 text-xs">SQL 预设：{templateQuery}</p>}
+              {templateQuery && <p className="mt-1 text-xs">SQL preset: {templateQuery}</p>}
             </div>
             <button
               type="button"
               onClick={handleClearTemplate}
               className="text-xs font-semibold text-emerald-200 hover:text-emerald-100"
             >
-              清除
+              Clear
             </button>
           </div>
         )}
@@ -338,7 +338,7 @@ function LogToolInner() {
           onFileAccepted={handleFileAccepted}
           isLoading={status === "sniffing" || status === "ingesting"}
           helperText={message}
-          ctaLabel="拖拽或选择日志文件"
+          ctaLabel="Drag or choose a log file"
         />
         <button
           type="button"
@@ -346,7 +346,7 @@ function LogToolInner() {
           disabled={isSampleLoading || status === "ingesting"}
           className="w-full rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400 hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isSampleLoading ? "正在载入 S3 示例..." : "📁 没有日志？载入示例 S3 Log"}
+          {isSampleLoading ? "Loading S3 sample..." : "📁 No log handy? Load the S3 sample"}
         </button>
         <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-50">
           <div className="flex items-start justify-between gap-4">
@@ -360,7 +360,7 @@ function LogToolInner() {
               disabled={probeStatus === "running"}
               className="rounded-full border border-amber-400/40 px-4 py-1 text-xs font-semibold text-amber-100 transition hover:border-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {probeStatus === "running" ? "测试中..." : "运行 Probe"}
+              {probeStatus === "running" ? "Testing..." : "Run probe"}
             </button>
           </div>
         </div>
@@ -368,17 +368,17 @@ function LogToolInner() {
           <p>
             {displayFormat ? (
               <>
-                已识别：<span className="font-semibold">{displayFormat.name}</span>
-                <br />置信度：{(displayConfidence * 100).toFixed(0)}%
+                Detected: <span className="font-semibold">{displayFormat.name}</span>
+                <br />Confidence: {(displayConfidence * 100).toFixed(0)}%
               </>
             ) : (
-              "尚未识别格式"
+              "No format detected yet"
             )}
           </p>
           <p className="mt-2 text-xs text-white/70">
             {ingestSummary
-              ? `预览 ${ingestSummary.columns.length} 列 / ${ingestSummary.totalRows.toLocaleString()} 行`
-              : "支持 Nginx, Apache, S3, Docker 等常见格式"}
+              ? `Previewing ${ingestSummary.columns.length} columns / ${ingestSummary.totalRows.toLocaleString()} rows`
+              : "Supports Nginx, Apache, S3, Docker and other common formats"}
           </p>
         </div>
       </div>
@@ -386,9 +386,9 @@ function LogToolInner() {
       <div className="w-full flex-1 space-y-6 rounded-3xl border border-white/10 bg-black/60 p-6">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-semibold text-emerald-300">步骤 2</p>
-            <h2 className="text-xl font-semibold">运行 SQL / 查看预览</h2>
-            <p className="text-sm text-white/70">DuckDB 在浏览器内执行，数据全程本地。</p>
+            <p className="text-sm font-semibold text-emerald-300">Step 2</p>
+            <h2 className="text-xl font-semibold">Run SQL / inspect preview</h2>
+            <p className="text-sm text-white/70">DuckDB runs entirely in the browser; data never leaves the tab.</p>
           </div>
           <div className={`text-sm ${status === "error" ? "text-red-200" : "text-white/70"}`}>
             {message}
@@ -412,7 +412,7 @@ function LogToolInner() {
         {status !== "ready" && !formattedRows.length ? (
           <ResultTableSkeleton />
         ) : (
-          <ResultTable columns={tableData.columns} rows={formattedRows} caption="查询结果" />
+          <ResultTable columns={tableData.columns} rows={formattedRows} caption="Query results" />
         )}
       </div>
     </section>

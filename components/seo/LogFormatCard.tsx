@@ -28,7 +28,7 @@ export default function LogFormatCard({ format }: Props) {
         className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-300"
         href={`/format/${format.slug}`}
       >
-        查看格式详情 <ArrowRight className="h-4 w-4" />
+        View format details <ArrowRight className="h-4 w-4" />
       </Link>
     </Card>
   );
