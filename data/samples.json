@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "nginx-ecommerce-burst",
+    "name": "Nginx Flash Sale Traffic",
+    "description": "High-RPS access log extracted from a live flash sale, includes cache-bypass examples.",
+    "file": "/samples/nginx-ecommerce.log",
+    "format": "nginx-access-log",
+    "size_kb": 42
+  },
+  {
+    "slug": "apache-marketing-form",
+    "name": "Apache Form Submissions",
+    "description": "Combined log with noisy bots and invalid referrers for rate-limiting exercises.",
+    "file": "/samples/apache-marketing.log",
+    "format": "apache-combined-log",
+    "size_kb": 37
+  },
+  {
+    "slug": "s3-cost-breakdown",
+    "name": "AWS S3 Cost Sample",
+    "description": "Server access log snippet showing GET/PUT edge cases including AccessDenied and InternalError.",
+    "file": "/samples/s3-access.log",
+    "format": "aws-s3-access-log",
+    "size_kb": 6
+  }
+]

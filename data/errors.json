@@ -1,0 +1,67 @@
+[
+  {
+    "code": "502",
+    "platform": "Nginx",
+    "slug": "nginx-502-bad-gateway",
+    "title": "Fix 502 Bad Gateway in Nginx",
+    "symptom": "Gateway returned an invalid response from upstream while proxying.",
+    "sql_query": "SELECT time_local, request, status FROM logs WHERE status = 502 ORDER BY time_local DESC LIMIT 50",
+    "solution_steps": [
+      "Verify upstream pods/processes are healthy and accepting traffic.",
+      "Check keepalive/timeout alignment between Nginx and upstream.",
+      "Inspect error.log for upstream prematurely closed connection entries."
+    ]
+  },
+  {
+    "code": "504",
+    "platform": "CloudFront",
+    "slug": "cloudfront-504-gateway-timeout",
+    "title": "CloudFront 504 Gateway Timeout",
+    "symptom": "Edge node waited too long for the origin before timing out.",
+    "sql_query": "SELECT edge_location, host, time_taken FROM logs WHERE status = 504 ORDER BY time_taken DESC",
+    "solution_steps": [
+      "Measure origin latency and compare with CloudFront origin timeout (30s default).",
+      "Reduce payload size or enable compression to shorten origin time.",
+      "Deploy Origin Shield or regional edge cache near the backend."
+    ]
+  },
+  {
+    "code": "AccessDenied",
+    "platform": "AWS S3",
+    "slug": "s3-access-denied",
+    "title": "S3 AccessDenied",
+    "symptom": "Requester lacks bucket policy permissions for the requested key.",
+    "sql_query": "SELECT key, requester FROM logs WHERE error_code = 'AccessDenied' LIMIT 100",
+    "solution_steps": [
+      "Confirm IAM principal or VPC endpoint is allowed in the bucket policy.",
+      "Ensure the object is not encrypted with a different KMS key policy.",
+      "Audit block public access flags that might override explicit grants."
+    ]
+  },
+  {
+    "code": "OOMKilled",
+    "platform": "Kubernetes",
+    "slug": "k8s-oom-killed",
+    "title": "Kubernetes Pod OOMKilled",
+    "symptom": "Container terminated because memory usage exceeded the cgroup limit.",
+    "sql_query": "SELECT message, time FROM logs WHERE message ILIKE '%OOMKilled%' ORDER BY time DESC",
+    "solution_steps": [
+      "Compare pod memory requests/limits with actual peak usage in metrics.",
+      "Capture heap/pprof snapshot from workload before eviction.",
+      "Add vertical pod autoscaler or tune GC flags for the runtime."
+    ]
+  },
+  {
+    "code": "deadlock_detected",
+    "platform": "PostgreSQL",
+    "slug": "postgres-deadlock",
+    "title": "PostgreSQL deadlock detected",
+    "symptom": "Two or more transactions locked each other causing an abort.",
+    "sql_query": "SELECT timestamp, message FROM logs WHERE message ILIKE '%deadlock%' ORDER BY timestamp DESC",
+    "solution_steps": [
+      "Capture pg_locks output around the timestamp for blocking chains.",
+      "Add explicit ordering to conflicting DML statements.",
+      "Shorten transaction scope or reduce isolation level to READ COMMITTED."
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+03f8example bucket-logs [23/Nov/2025:10:00:00 +0000] 203.0.113.5 0A1B2C3D REST.GET.OBJECT invoices/2025/nov.csv "GET /invoices/2025/nov.csv HTTP/1.1" 200 - 5120 5096 30 29 "https://dash.analytics" "aws-sdk-go/1.42"
+03f8example bucket-logs [23/Nov/2025:10:00:02 +0000] 198.51.100.9 3E57427F3E REST.LIST.BUCKET - "GET /?list-type=2 HTTP/1.1" 200 - 1024 512 120 118 "-" "aws-cli/2.21"

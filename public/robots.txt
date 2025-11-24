@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://loganalytics.org
+
+# Sitemaps
+Sitemap: https://loganalytics.org/sitemap.xml
