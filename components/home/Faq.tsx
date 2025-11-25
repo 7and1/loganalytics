@@ -16,12 +16,12 @@ const items = [
 export function Faq() {
   return (
     <section className="container mx-auto px-4 py-16">
-      <h2 className="text-2xl font-bold text-white">FAQ</h2>
+      <h2 className="text-2xl font-bold text-slate-900">FAQ</h2>
       <div className="mt-8 space-y-6">
         {items.map((item) => (
-          <div key={item.q} className="rounded-2xl border border-white/5 bg-zinc-900/40 p-6">
-            <p className="text-sm uppercase tracking-[0.2em] text-blue-400">{item.q}</p>
-            <p className="mt-2 text-sm text-zinc-400">{item.a}</p>
+          <div key={item.q} className="rounded-2xl border border-blue-100 bg-white p-6 shadow-sm">
+            <p className="text-sm uppercase tracking-[0.2em] text-blue-500">{item.q}</p>
+            <p className="mt-2 text-sm text-slate-600">{item.a}</p>
           </div>
         ))}
       </div>

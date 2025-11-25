@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import formatsData from "@/data/formats";
 import samplesData from "@/data/samples.json";
+import { getFormatDefaultQuery } from "@/lib/content";
 import type { LogFormat, SampleAsset } from "@/types/content";
 
 const formats = formatsData as LogFormat[];
@@ -42,7 +43,7 @@ export default async function FormatPage({ params }: FormatPageProps) {
   }
   const resolvedFormat = format;
 
-  const defaultQuery = buildDefaultQuery(resolvedFormat);
+  const defaultQuery = getFormatDefaultQuery(resolvedFormat);
   const baseParams = new URLSearchParams({
     logType: resolvedFormat.slug,
     query: defaultQuery,
@@ -144,13 +145,4 @@ export default async function FormatPage({ params }: FormatPageProps) {
       ) : null}
     </main>
   );
-}
-
-function buildDefaultQuery(format: LogFormat): string {
-  const hasStatus = /status/i.test(format.duckdb_schema);
-  if (hasStatus && format.common_errors.length) {
-    const codes = format.common_errors.slice(0, 3).map((code) => `'${code}'`).join(", ");
-    return `SELECT * FROM log_table WHERE status IN (${codes}) LIMIT 200;`;
-  }
-  return "SELECT * FROM log_table LIMIT 200;";
 }

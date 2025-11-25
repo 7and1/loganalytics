@@ -16,27 +16,33 @@ export default function ResultTable({ columns, rows, caption }: ResultTableProps
   }
 
   return (
-    <div className="max-h-[420px] overflow-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
-      <table className="min-w-full divide-y divide-zinc-200 text-sm dark:divide-zinc-800">
+    <div className="max-h-[520px] overflow-auto rounded-2xl border border-blue-100 bg-white shadow-sm">
+      <table className="min-w-full divide-y divide-blue-100 text-sm">
         {caption && <caption className="sr-only">{caption}</caption>}
-        <thead className="bg-zinc-50/70 dark:bg-zinc-900/50">
+        <thead className="bg-gradient-to-r from-blue-50 to-indigo-50 sticky top-0 z-10">
           <tr>
             {columns.map((column) => (
               <th
                 key={column}
                 scope="col"
-                className="px-4 py-2 text-left font-semibold uppercase tracking-wide text-xs text-zinc-500 dark:text-zinc-400"
+                className="px-4 py-3 text-left font-semibold uppercase tracking-wide text-xs text-blue-700 whitespace-nowrap"
               >
                 {column}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-zinc-100 dark:divide-zinc-900">
+        <tbody className="divide-y divide-slate-100 bg-white">
           {rows.map((row, rowIndex) => (
-            <tr key={rowIndex} className="bg-white/80 dark:bg-zinc-900/40">
+            <tr
+              key={rowIndex}
+              className="hover:bg-blue-50/50 transition-colors duration-150"
+            >
               {columns.map((column) => (
-                <td key={`${column}-${rowIndex}`} className="px-4 py-2 text-xs text-zinc-800 dark:text-zinc-100">
+                <td
+                  key={`${column}-${rowIndex}`}
+                  className="px-4 py-3 text-xs text-slate-700 font-mono whitespace-nowrap"
+                >
                   {row[column] as ReactNode}
                 </td>
               ))}
@@ -50,14 +56,28 @@ export default function ResultTable({ columns, rows, caption }: ResultTableProps
 
 export function ResultTableSkeleton({ columns = 6, rows = 5 }: { columns?: number; rows?: number }) {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white/60 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/60">
-      <div className="flex flex-col gap-2">
+    <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50/50 to-white p-6 shadow-sm">
+      {/* Header skeleton */}
+      <div className="mb-4 flex gap-3">
+        {Array.from({ length: columns }).map((_, colIndex) => (
+          <div
+            key={`header-${colIndex}`}
+            className="h-5 flex-1 animate-pulse rounded-md bg-blue-200/40"
+          />
+        ))}
+      </div>
+
+      {/* Rows skeleton */}
+      <div className="flex flex-col gap-3">
         {Array.from({ length: rows }).map((_, rowIndex) => (
           <div key={rowIndex} className="flex gap-3">
             {Array.from({ length: columns }).map((__, colIndex) => (
-              <span
+              <div
                 key={`${rowIndex}-${colIndex}`}
-                className="h-6 flex-1 animate-pulse rounded bg-zinc-200/80 dark:bg-zinc-800"
+                className="h-8 flex-1 animate-pulse rounded-lg bg-gradient-to-r from-slate-100 via-slate-50 to-slate-100 bg-[length:200%_100%] animate-shimmer"
+                style={{
+                  animationDelay: `${(rowIndex * 0.05 + colIndex * 0.02)}s`,
+                }}
               />
             ))}
           </div>

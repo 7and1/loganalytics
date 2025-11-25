@@ -1,24 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
+  --background: 210 100% 99%;
+  --foreground: 215 31% 18%;
+  --accent: 213 94% 68%;
+  --accent-strong: 217 91% 60%;
+  --card: 0 0% 100%;
 }
 
 body {
-  @apply bg-zinc-950 text-zinc-50 antialiased;
+  @apply antialiased;
+}
+
+.bg-page {
+  background: radial-gradient(circle at top, rgba(59, 130, 246, 0.12), transparent 45%),
+    radial-gradient(circle at 25% 20%, rgba(14, 165, 233, 0.18), transparent 40%),
+    #f8fbff;
+  min-height: 100vh;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-zinc-950;
+  @apply bg-blue-50;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-800 rounded-full;
+  @apply bg-blue-200 rounded-full;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-zinc-600;
+  @apply bg-blue-300;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
 }

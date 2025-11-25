@@ -54,8 +54,8 @@ export function AutoCharts({ statusData, timelineData, isLoading, error }: AutoC
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {statusData.length > 0 && (
-            <div className="rounded-3xl border border-zinc-200/40 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-zinc-800/60 dark:bg-gradient-to-br dark:from-[#0b1120]/90 dark:via-[#111827]/90 dark:to-[#0f172a]/90">
-            <div className="mb-3 text-sm font-medium uppercase tracking-wide text-emerald-200">
+            <div className="rounded-3xl border border-blue-100 bg-white p-4 shadow-sm">
+            <div className="mb-3 text-sm font-medium uppercase tracking-wide text-blue-500">
               Status Breakdown
             </div>
             <div className="h-56">
@@ -86,7 +86,7 @@ export function AutoCharts({ statusData, timelineData, isLoading, error }: AutoC
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-zinc-600 dark:text-zinc-300">
+            <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-slate-600">
               {statusData.map((entry, index) => (
                 <div key={entry.status} className="flex items-center gap-2">
                   <span
@@ -101,16 +101,16 @@ export function AutoCharts({ statusData, timelineData, isLoading, error }: AutoC
             </div>
           )}
           {timelineData.length > 0 && (
-            <div className="rounded-3xl border border-zinc-200/40 bg-white/80 p-4 shadow-sm backdrop-blur dark:border-zinc-800/60 dark:bg-gradient-to-br dark:from-[#0b1120]/90 dark:via-[#0f1627]/90 dark:to-[#0a1120]/90">
-            <div className="mb-3 text-sm font-medium uppercase tracking-wide text-sky-200">
+            <div className="rounded-3xl border border-blue-100 bg-white p-4 shadow-sm">
+            <div className="mb-3 text-sm font-medium uppercase tracking-wide text-blue-500">
               Request Timeline (minute)
             </div>
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={timelineData} margin={{ left: 10, right: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.25)" />
-                  <XAxis dataKey="bucket" tick={{ fontSize: 10, fill: "#cbd5f5" }} hide={timelineData.length > 15} />
-                  <YAxis tick={{ fontSize: 10, fill: "#cbd5f5" }} width={40} allowDecimals={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.5)" />
+                  <XAxis dataKey="bucket" tick={{ fontSize: 10, fill: "#475569" }} hide={timelineData.length > 15} />
+                  <YAxis tick={{ fontSize: 10, fill: "#475569" }} width={40} allowDecimals={false} />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: "rgba(15,23,42,0.9)",

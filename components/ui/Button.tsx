@@ -2,15 +2,13 @@
 
 import type { ButtonHTMLAttributes } from "react";
 
-const base = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none";
+const base =
+  "inline-flex items-center justify-center rounded-full text-sm font-semibold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
 const variants: Record<string, string> = {
-  primary:
-    "bg-black text-white hover:bg-zinc-800 focus-visible:outline-black dark:bg-zinc-100 dark:text-black dark:hover:bg-zinc-200",
-  ghost:
-    "bg-transparent text-black hover:bg-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-900",
-  subtle:
-    "bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900 dark:text-zinc-50 dark:hover:bg-zinc-800",
+  primary: "bg-blue-600 text-white hover:bg-blue-500 focus-visible:outline-blue-600 shadow-lg shadow-blue-600/25 hover:shadow-xl hover:shadow-blue-600/30 px-6 py-3",
+  ghost: "bg-transparent text-slate-900 hover:bg-blue-50 px-4 py-2",
+  subtle: "bg-white text-slate-900 border border-blue-100 hover:border-blue-300 px-4 py-2",
 };
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {

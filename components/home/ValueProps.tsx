@@ -23,12 +23,12 @@ export function ValueProps() {
     <section className="container mx-auto px-4 py-16">
       <div className="grid gap-6 md:grid-cols-3">
         {items.map((item) => (
-          <div key={item.title} className="rounded-2xl border border-white/5 bg-zinc-900/60 p-6">
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-800">
-              <item.icon className="h-6 w-6 text-blue-400" />
+          <div key={item.title} className="rounded-3xl border border-blue-100 bg-white p-6 shadow-sm">
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <item.icon className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-            <p className="mt-2 text-sm text-zinc-400">{item.body}</p>
+            <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+            <p className="mt-2 text-sm text-slate-600">{item.body}</p>
           </div>
         ))}
       </div>

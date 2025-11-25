@@ -310,25 +310,25 @@ function LogToolInner() {
   }, [consumeTemplate]);
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 lg:flex-row">
-      <div className="w-full space-y-6 rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur lg:w-1/3">
+    <section id="tool" className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-12 lg:flex-row">
+      <div className="w-full space-y-6 rounded-3xl border border-blue-100 bg-white p-6 shadow-xl lg:w-1/3">
         <div className="space-y-2">
-          <p className="text-sm uppercase tracking-wide text-emerald-300">Step 1</p>
-          <h1 className="text-2xl font-semibold">Drop a log, auto-detect format</h1>
-          <p className="text-sm text-white/70">Sniffer only inspects the first 64 KB to match against formats.json.</p>
+          <p className="text-sm uppercase tracking-wide text-blue-500">Step 1</p>
+          <h2 className="text-2xl font-semibold text-slate-900">Drop a log, auto-detect format</h2>
+          <p className="text-sm text-slate-500">Sniffer only inspects the first 64 KB to match against formats.json.</p>
         </div>
         {isTemplateActive && templateFormat && (
-          <div className="flex items-start justify-between gap-4 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4 text-sm text-emerald-100">
+          <div className="flex items-start justify-between gap-4 rounded-2xl border border-blue-200 bg-blue-50 p-4 text-sm text-slate-700">
             <div>
               <p>
-                🚀 Template active: <span className="font-semibold">{templateFormat.name}</span>
+                🚀 Template active: <span className="font-semibold text-blue-700">{templateFormat.name}</span>
               </p>
-              {templateQuery && <p className="mt-1 text-xs">SQL preset: {templateQuery}</p>}
+              {templateQuery && <p className="mt-1 text-xs text-slate-500">SQL preset: {templateQuery}</p>}
             </div>
             <button
               type="button"
               onClick={handleClearTemplate}
-              className="text-xs font-semibold text-emerald-200 hover:text-emerald-100"
+              className="text-xs font-semibold text-blue-600 hover:text-blue-500"
             >
               Clear
             </button>
@@ -344,38 +344,38 @@ function LogToolInner() {
           type="button"
           onClick={handleLoadSample}
           disabled={isSampleLoading || status === "ingesting"}
-          className="w-full rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400 hover:bg-emerald-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full rounded-2xl border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:border-blue-400 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSampleLoading ? "Loading S3 sample..." : "📁 No log handy? Load the S3 sample"}
         </button>
-        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-50">
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-semibold text-amber-200">DuckDB Rejects Probe</p>
-              <p className="mt-1 text-xs text-amber-100/70">{probeMessage}</p>
+              <p className="font-semibold">DuckDB Rejects Probe</p>
+              <p className="mt-1 text-xs opacity-80">{probeMessage}</p>
             </div>
             <button
               type="button"
               onClick={handleRunProbe}
               disabled={probeStatus === "running"}
-              className="rounded-full border border-amber-400/40 px-4 py-1 text-xs font-semibold text-amber-100 transition hover:border-amber-200 disabled:cursor-not-allowed disabled:opacity-60"
+              className="rounded-full border border-amber-300 px-4 py-1 text-xs font-semibold text-amber-900 transition hover:border-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {probeStatus === "running" ? "Testing..." : "Run probe"}
             </button>
           </div>
         </div>
-        <div className="rounded-2xl border border-white/10 bg-black/30 p-4 text-sm leading-relaxed">
+        <div className="rounded-2xl border border-blue-100 bg-blue-50 p-4 text-sm leading-relaxed text-slate-700">
           <p>
             {displayFormat ? (
               <>
-                Detected: <span className="font-semibold">{displayFormat.name}</span>
+                Detected: <span className="font-semibold text-blue-700">{displayFormat.name}</span>
                 <br />Confidence: {(displayConfidence * 100).toFixed(0)}%
               </>
             ) : (
               "No format detected yet"
             )}
           </p>
-          <p className="mt-2 text-xs text-white/70">
+          <p className="mt-2 text-xs text-slate-500">
             {ingestSummary
               ? `Previewing ${ingestSummary.columns.length} columns / ${ingestSummary.totalRows.toLocaleString()} rows`
               : "Supports Nginx, Apache, S3, Docker and other common formats"}
@@ -383,14 +383,14 @@ function LogToolInner() {
         </div>
       </div>
 
-      <div className="w-full flex-1 space-y-6 rounded-3xl border border-white/10 bg-black/60 p-6">
+      <div className="w-full flex-1 space-y-6 rounded-3xl border border-blue-100 bg-white p-6 shadow-xl">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm font-semibold text-emerald-300">Step 2</p>
-            <h2 className="text-xl font-semibold">Run SQL / inspect preview</h2>
-            <p className="text-sm text-white/70">DuckDB runs entirely in the browser; data never leaves the tab.</p>
+            <p className="text-sm font-semibold text-blue-500">Step 2</p>
+            <h3 className="text-xl font-semibold text-slate-900">Run SQL / inspect preview</h3>
+            <p className="text-sm text-slate-500">DuckDB runs entirely in the browser; data never leaves the tab.</p>
           </div>
-          <div className={`text-sm ${status === "error" ? "text-red-200" : "text-white/70"}`}>
+          <div className={`text-sm ${status === "error" ? "text-red-500" : "text-slate-500"}`}>
             {message}
           </div>
         </div>

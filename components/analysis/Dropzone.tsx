@@ -31,9 +31,9 @@ export default function Dropzone({
 
   return (
     <label
-      className={`flex flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed px-6 py-12 text-center transition-colors ${
-        isDragging ? "border-blue-500 bg-blue-50/40" : "border-zinc-300 hover:border-zinc-400"
-      } ${isLoading ? "opacity-60" : ""}`}
+      className={`flex flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed px-6 py-12 text-center transition-colors ${
+        isDragging ? "border-blue-500 bg-blue-50" : "border-blue-200 hover:border-blue-400"
+      } ${isLoading ? "opacity-60" : "bg-white shadow-sm"}`}
       onDragOver={(event) => {
         event.preventDefault();
         setDragging(true);
@@ -55,18 +55,18 @@ export default function Dropzone({
         onChange={(event) => handleFiles(event.target.files)}
         disabled={isLoading}
       />
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-200">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600">
         <Upload className="h-7 w-7" />
       </div>
       <div className="space-y-1">
-        <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{ctaLabel}</p>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-lg font-semibold text-slate-900">{ctaLabel}</p>
+        <p className="text-sm text-slate-500">
           {!isLoading
             ? helperText ?? "Supports CSV, Nginx, Apache, S3, Docker and other common log formats"
             : "DuckDB is parsing..."}
         </p>
       </div>
-      <Button type="button" variant="subtle" disabled={isLoading}>
+      <Button type="button" variant="ghost" className="bg-blue-600 text-white hover:bg-blue-500" disabled={isLoading}>
         Choose file
       </Button>
     </label>

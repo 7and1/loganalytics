@@ -1,0 +1,37 @@
+{
+  "name": "LogAnalytics — Local-First Log Intelligence",
+  "short_name": "LogAnalytics",
+  "description": "Parse Apache, Nginx & AWS Logs in Your Browser. Privacy-first, DuckDB-Wasm powered.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fbff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "development",
+    "utilities",
+    "productivity"
+  ],
+  "lang": "en",
+  "dir": "ltr"
+}

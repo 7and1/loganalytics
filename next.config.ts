@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
+  turbopack: {},
   webpack: (config, { isServer }) => {
     config.resolve ??= {};
 
