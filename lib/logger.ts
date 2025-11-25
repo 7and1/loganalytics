@@ -9,7 +9,7 @@ export const logger = {
   /**
    * Debug logs (only in development)
    */
-  log: (...args: any[]) => {
+  log: (...args: unknown[]) => {
     if (isDev) {
       console.log('[LogAnalytics]', ...args);
     }
@@ -18,7 +18,7 @@ export const logger = {
   /**
    * Info logs (only in development)
    */
-  info: (...args: any[]) => {
+  info: (...args: unknown[]) => {
     if (isDev) {
       console.info('[Info]', ...args);
     }
@@ -27,14 +27,14 @@ export const logger = {
   /**
    * Warning logs (always shown)
    */
-  warn: (...args: any[]) => {
+  warn: (...args: unknown[]) => {
     console.warn('[Warning]', ...args);
   },
 
   /**
    * Error logs (always shown + could send to error tracking)
    */
-  error: (...args: any[]) => {
+  error: (...args: unknown[]) => {
     console.error('[Error]', ...args);
 
     // TODO: Send to error tracking service when implemented
