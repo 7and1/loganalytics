@@ -9,7 +9,7 @@ export function Header() {
       <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-3 text-lg font-semibold text-slate-900">
           <Logo className="h-10 w-10 drop-shadow-lg" />
-          <span>LogAnalytics</span>
+          <span>Log Analytics</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 md:flex">
           <Link href="/formats" className="transition hover:text-blue-600">
